@@ -1,17 +1,21 @@
 import styled from "styled-components";
-import map from "../images/map.png";
+import MapImage from "./MapImage";
 
 const MapBox = styled.div`
-  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 1024px;
   height: 768px;
+  border: 1px solid black;
   overflow: hidden;
+  position: relative;
 `;
 
 const Map = () => {
   return (
     <MapBox>
-      <img src={map} alt="map" />
+      <MapImage />
     </MapBox>
   );
 };
