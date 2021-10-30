@@ -10,41 +10,39 @@ const MapImageBox = styled.div`
   cursor: move;
 `;
 
-const MapImage = () => {
-  const imgRef = useRef();
+const MapImage = ({ mapOffset }) => {
+  const boxRef = useRef();
   const [loc, setLoc] = useState(null);
-  const [pos, setPos] = useState({ x: 0, y: 0 });
+  const [pos, setPos] = useState(null);
   const [dragStat, setDragStat] = useState(false);
 
   const onDragStart = (e) => {
-    e.preventDefault();
     setDragStat(true);
 
     setLoc(() => ({
-      x: imgRef.current.offsetLeft + "px",
-      y: imgRef.current.offsetTop + "px",
+      x: boxRef.current.offsetLeft + "px",
+      y: boxRef.current.offsetTop + "px",
     }));
     setPos({
-      x: imgRef.current.offsetLeft - e.pageX,
-      y: imgRef.current.offsetTop - e.pageY,
+      x: e.pageX,
+      y: e.pageY,
     });
   };
 
   const onDrag = (e) => {
     e.preventDefault();
-    e.stopPropagation();
 
     if (dragStat) {
       const curPos = {
-        x: imgRef.current.offsetLeft - e.pageX,
-        y: imgRef.current.offsetTop - e.pageY,
+        x: e.pageX,
+        y: e.pageY,
       };
 
-      let changePosX = curPos.x - pos.x;
-      let changePosY = curPos.y - pos.y;
+      let changePosX = pos.x - curPos.x;
+      let changePosY = pos.y - curPos.y;
 
-      let changedLocX = parseInt(loc.x) - changePosX / 2;
-      let changedLocY = parseInt(loc.y) - changePosY / 2;
+      let changedLocX = parseInt(loc.x) - changePosX;
+      let changedLocY = parseInt(loc.y) - changePosY;
 
       if (changedLocX > 0) {
         changedLocX = 0;
@@ -63,12 +61,12 @@ const MapImage = () => {
         x: changedLocX + "px",
         y: changedLocY + "px",
       }));
+
       setPos(curPos);
     }
   };
 
   const onDragEnd = (e) => {
-    e.preventDefault();
     setDragStat(false);
   };
   const onMouseOver = (e) => {
@@ -77,7 +75,7 @@ const MapImage = () => {
 
   return (
     <MapImageBox
-      ref={imgRef}
+      ref={boxRef}
       onMouseDown={onDragStart}
       onMouseMove={onDrag}
       onMouseUp={onDragEnd}

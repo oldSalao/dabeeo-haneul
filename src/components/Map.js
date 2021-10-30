@@ -8,6 +8,7 @@ const MapBox = styled.div`
   width: 1024px;
   height: 768px;
   border: 1px solid black;
+  box-sizing: border-box;
   overflow: hidden;
   position: relative;
 `;
