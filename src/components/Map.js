@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import map from "../images/map.png";
 
 const MapBox = styled.div`
   border: 1px solid black;
@@ -7,7 +8,11 @@ const MapBox = styled.div`
 `;
 
 const Map = () => {
-  return <MapBox />;
+  return (
+    <MapBox>
+      <img src={map} />
+    </MapBox>
+  );
 };
 
 export default Map;
