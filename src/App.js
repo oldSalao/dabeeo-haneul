@@ -1,12 +1,19 @@
-import "./App.css";
+import styled from "styled-components";
 import Map from "./components/Map";
 
-function App() {
+const AppBox = styled.div`
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+`;
+
+const App = () => {
   return (
-    <div className="App">
+    <AppBox>
       <Map />
-    </div>
+    </AppBox>
   );
-}
+};
 
 export default App;
