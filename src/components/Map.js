@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import MapImage from "./MapImage";
+import ResetButton from "./ResetButton";
 
 const MapBox = styled.div`
   display: flex;
@@ -16,6 +17,7 @@ const MapBox = styled.div`
 const Map = () => {
   return (
     <MapBox>
+      <ResetButton />
       <MapImage />
     </MapBox>
   );
