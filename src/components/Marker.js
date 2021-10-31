@@ -4,6 +4,7 @@ import marker from "../images/marker.png";
 const MarkerBox = styled.div`
   position: absolute;
   z-index: 1;
+  pointer-events: none;
 `;
 
 const Marker = ({ x, y }) => {
