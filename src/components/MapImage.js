@@ -10,7 +10,7 @@ const MapImageBox = styled.div`
   cursor: move;
 `;
 
-const MapImage = ({ mapOffset }) => {
+const MapImage = () => {
   const boxRef = useRef();
   const [loc, setLoc] = useState(null);
   const [pos, setPos] = useState(null);
