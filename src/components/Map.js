@@ -1,3 +1,4 @@
+import { useRef, useState } from "react";
 import styled from "styled-components";
 import MapImage from "./MapImage";
 import ResetButton from "./ResetButton";
@@ -15,10 +16,13 @@ const MapBox = styled.div`
 `;
 
 const Map = () => {
+  const mapRef = useRef();
+  const [markers, setMarkers] = useState([]);
+
   return (
-    <MapBox>
-      <ResetButton />
-      <MapImage />
+    <MapBox ref={mapRef}>
+      <ResetButton setMarkers={setMarkers} />
+      <MapImage mapRef={mapRef} markers={markers} setMarkers={setMarkers} />
     </MapBox>
   );
 };

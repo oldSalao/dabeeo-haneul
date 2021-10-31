@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import styled from "styled-components";
 import map from "../images/map.png";
+import Marker from "./Marker";
 
 const MAP_WIDTH = 1024;
 const MAP_HEIGHT = 768;
@@ -10,7 +11,7 @@ const MapImageBox = styled.div`
   cursor: move;
 `;
 
-const MapImage = () => {
+const MapImage = ({ mapRef, markers, setMarkers }) => {
   const boxRef = useRef();
   const [loc, setLoc] = useState(null);
   const [pos, setPos] = useState(null);
@@ -66,11 +67,26 @@ const MapImage = () => {
     }
   };
 
-  const onDragEnd = (e) => {
+  const onDragEnd = () => {
     setDragStat(false);
   };
-  const onMouseOver = (e) => {
+  const onMouseOver = () => {
     setDragStat(false);
+  };
+  const onContextMenu = (e) => {
+    e.preventDefault();
+    setMarkers((prevMarkers) => {
+      return prevMarkers.concat({
+        x:
+          e.pageX -
+          mapRef.current.getBoundingClientRect().left -
+          boxRef.current.offsetLeft,
+        y:
+          e.pageY -
+          mapRef.current.getBoundingClientRect().top -
+          boxRef.current.offsetTop,
+      });
+    });
   };
 
   return (
@@ -80,9 +96,14 @@ const MapImage = () => {
       onMouseMove={onDrag}
       onMouseUp={onDragEnd}
       onMouseOver={onMouseOver}
+      onContextMenu={onContextMenu}
       style={loc && { left: loc.x, top: loc.y }}
     >
       <img src={map} alt="map" />
+      {markers &&
+        markers.map((marker, idx) => (
+          <Marker key={idx} x={marker.x} y={marker.y} />
+        ))}
     </MapImageBox>
   );
 };

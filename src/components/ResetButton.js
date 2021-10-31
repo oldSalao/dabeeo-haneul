@@ -2,16 +2,20 @@ import styled from "styled-components";
 import resetButton from "../images/reset.png";
 
 const ResetButtonBox = styled.div`
-  position: relative;
-  z-index: 1;
-  top: -350px;
-  left: 480px;
+  position: absolute;
+  z-index: 2;
+  top: 5px;
+  left: 965px;
   cursor: pointer;
 `;
 
-const ResetButton = () => {
+const ResetButton = ({ setMarkers }) => {
+  const onClick = () => {
+    setMarkers([]);
+  };
+
   return (
-    <ResetButtonBox>
+    <ResetButtonBox onClick={onClick}>
       <img src={resetButton} alt="resetButton" />
     </ResetButtonBox>
   );
