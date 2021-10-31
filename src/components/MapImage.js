@@ -9,15 +9,17 @@ import {
 import styled from "styled-components";
 import map from "../images/map.png";
 import Marker from "./Marker";
+import { addMarker } from "../features/marker/markerSlice";
 
 const MapImageBox = styled.div`
   position: absolute;
   cursor: move;
 `;
 
-const MapImage = ({ mapRef, markers, setMarkers }) => {
+const MapImage = ({ mapRef }) => {
   const imgRef = useRef(null);
   const loc = useSelector((state) => state.map.loc);
+  const markers = useSelector((state) => state.marker.markers);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -52,8 +54,9 @@ const MapImage = ({ mapRef, markers, setMarkers }) => {
 
   const onContextMenu = (e) => {
     e.preventDefault();
-    setMarkers((prevMarkers) => {
-      return prevMarkers.concat({
+
+    dispatch(
+      addMarker({
         x:
           e.pageX -
           mapRef.current.getBoundingClientRect().left -
@@ -62,8 +65,8 @@ const MapImage = ({ mapRef, markers, setMarkers }) => {
           e.pageY -
           mapRef.current.getBoundingClientRect().top -
           imgRef.current.offsetTop,
-      });
-    });
+      })
+    );
   };
 
   return (

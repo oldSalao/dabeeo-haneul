@@ -1,4 +1,6 @@
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { clear } from "../features/marker/markerSlice";
 import resetButton from "../images/reset.png";
 
 const ResetButtonBox = styled.div`
@@ -9,9 +11,10 @@ const ResetButtonBox = styled.div`
   cursor: pointer;
 `;
 
-const ResetButton = ({ setMarkers }) => {
+const ResetButton = () => {
+  const dispatch = useDispatch();
   const onClick = () => {
-    setMarkers([]);
+    dispatch(clear());
   };
 
   return (

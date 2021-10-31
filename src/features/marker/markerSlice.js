@@ -9,7 +9,8 @@ export const markerSlice = createSlice({
   initialState,
   reducers: {
     addMarker: (state, action) => {
-      state.markers.push(action.payload);
+      const marker = action.payload;
+      state.markers.push(marker);
     },
     clear: (state) => {
       state.markers = [];
