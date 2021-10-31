@@ -1,4 +1,6 @@
 import { useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { changeLoc, changePos } from "../features/map/mapSlice";
 import styled from "styled-components";
 import map from "../images/map.png";
 import Marker from "./Marker";
@@ -13,21 +15,28 @@ const MapImageBox = styled.div`
 
 const MapImage = ({ mapRef, markers, setMarkers }) => {
   const boxRef = useRef();
-  const [loc, setLoc] = useState(null);
-  const [pos, setPos] = useState(null);
+  const loc = useSelector((state) => state.map.loc);
+  const pos = useSelector((state) => state.map.pos);
+  const dispatch = useDispatch();
+
   const [dragStat, setDragStat] = useState(false);
 
   const onDragStart = (e) => {
     setDragStat(true);
 
-    setLoc(() => ({
-      x: boxRef.current.offsetLeft + "px",
-      y: boxRef.current.offsetTop + "px",
-    }));
-    setPos({
-      x: e.pageX,
-      y: e.pageY,
-    });
+    dispatch(
+      changeLoc({
+        x: boxRef.current.offsetLeft + "px",
+        y: boxRef.current.offsetTop + "px",
+      })
+    );
+
+    dispatch(
+      changePos({
+        x: e.pageX,
+        y: e.pageY,
+      })
+    );
   };
 
   const onDrag = (e) => {
@@ -58,12 +67,14 @@ const MapImage = ({ mapRef, markers, setMarkers }) => {
         changedLocY = MAP_HEIGHT - e.target.clientHeight;
       }
 
-      setLoc(() => ({
-        x: changedLocX + "px",
-        y: changedLocY + "px",
-      }));
+      dispatch(
+        changeLoc({
+          x: changedLocX + "px",
+          y: changedLocY + "px",
+        })
+      );
 
-      setPos(curPos);
+      dispatch(changePos(curPos));
     }
   };
 
