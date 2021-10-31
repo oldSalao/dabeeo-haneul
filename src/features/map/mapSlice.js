@@ -1,18 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  loc: {
-    x: 0,
-    y: 0,
-  },
-  pos: {
-    x: 0,
-    y: 0,
-  },
-  offset: {
-    x: 0,
-    y: 0,
-  },
+  loc: null,
+  pos: null,
+  size: null,
   dragStat: false,
 };
 
@@ -21,10 +12,16 @@ export const mapSlice = createSlice({
   initialState,
   reducers: {
     changePos: (state, action) => {
-      state.pos = action.payload;
+      const { x, y } = action.payload;
+      state.pos = { x, y };
     },
     changeLoc: (state, action) => {
-      state.loc = action.payload;
+      const { x, y } = action.payload;
+      state.loc = { x, y };
+    },
+    setSize: (state, action) => {
+      const { width, height } = action.payload;
+      state.size = { width, height };
     },
     dragStart: (state) => {
       state.dragStat = true;
@@ -35,6 +32,7 @@ export const mapSlice = createSlice({
   },
 });
 
-export const { changePos, changeLoc, dragStart, dragEnd } = mapSlice.actions;
+export const { changePos, changeLoc, dragStart, dragEnd, setSize } =
+  mapSlice.actions;
 
 export default mapSlice.reducer;
